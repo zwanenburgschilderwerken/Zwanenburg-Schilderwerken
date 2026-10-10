@@ -874,20 +874,24 @@
     <div class="hero-form" id="offerte">
       <div class="hero-form-title">✉ Gratis offerte — reactie binnen 24 uur</div>
 
-      <div id="form-fields">
+      <form id="offerte-form" action="https://formspree.io/f/xljgnnzd" method="POST">
+        <!-- Verborgen velden voor Formspree -->
+        <input type="hidden" name="_subject" value="🎨 Nieuwe offerte-aanvraag via website">
+        <input type="hidden" name="_next" value="">
+
         <div class="form-grid">
-          <input type="text" placeholder="Voornaam" id="fname">
-          <input type="text" placeholder="Achternaam" id="lname">
+          <input type="text" name="voornaam" placeholder="Voornaam" required>
+          <input type="text" name="achternaam" placeholder="Achternaam">
         </div>
         <div class="form-grid">
-          <input type="tel" placeholder="Telefoonnummer" id="phone">
-          <input type="email" placeholder="E-mailadres" id="email">
+          <input type="tel" name="telefoon" placeholder="Telefoonnummer">
+          <input type="email" name="email" placeholder="E-mailadres" required>
         </div>
         <div class="form-grid one">
-          <input type="text" placeholder="Adres (optioneel)" id="adres">
+          <input type="text" name="adres" placeholder="Adres (optioneel)">
         </div>
         <div class="form-grid one">
-          <select id="dienst">
+          <select name="dienst" required>
             <option value="" disabled selected>Welke dienst zoekt u?</option>
             <option>Buitenschilderwerk</option>
             <option>Binnenschilderwerk</option>
@@ -898,13 +902,13 @@
           </select>
         </div>
         <div class="form-grid one">
-          <textarea placeholder="Korte omschrijving van uw project (optioneel)" id="msg"></textarea>
+          <textarea name="bericht" placeholder="Korte omschrijving van uw project (optioneel)"></textarea>
         </div>
-        <button class="btn-submit" onclick="submitForm()">Stuur offerte-aanvraag →</button>
+        <button type="submit" class="btn-submit">Stuur offerte-aanvraag →</button>
         <div class="form-note">🔒 Vrijblijvend · Geen verplichtingen · 100% gratis</div>
-      </div>
+      </form>
 
-      <div class="success-panel" id="success-panel">
+      <div class="success-panel" id="success-panel" style="display:none">
         <div class="check">✓</div>
         <h3>Bedankt voor uw aanvraag!</h3>
         <p>Wij nemen binnen <strong>24 uur</strong> contact met u op om uw wensen te bespreken en een afspraak te plannen voor een gratis inspectie.</p>
@@ -1288,7 +1292,7 @@
 </div>
 
 <script>
-  // Smooth scroll for all anchor links
+  // ── Smooth scroll ──
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const target = document.querySelector(a.getAttribute('href'));
@@ -1299,57 +1303,42 @@
     });
   });
 
-  // Form submit — stuurt email via Formspree naar zwanenburgschilderwerken@gmail.com
-  async function submitForm() {
-    const fname   = document.getElementById('fname').value.trim();
-    const lname   = document.getElementById('lname').value.trim();
-    const phone   = document.getElementById('phone').value.trim();
-    const email   = document.getElementById('email').value.trim();
-    const adres   = document.getElementById('adres').value.trim();
-    const dienst  = document.getElementById('dienst').value;
-    const msg     = document.getElementById('msg').value.trim();
+  // ── Formulier via Formspree AJAX ──
+  const form = document.getElementById('offerte-form');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-    if (!fname || !email || !dienst) {
-      alert('Vul minimaal uw naam, e-mailadres en gewenste dienst in.');
-      return;
-    }
-
-    const btn = document.querySelector('.btn-submit');
+    const btn = form.querySelector('.btn-submit');
     btn.textContent = 'Bezig met versturen...';
     btn.disabled = true;
 
+    const data = new FormData(form);
+
     try {
-      const response = await fetch('https://formspree.io/f/mwpbwdqb', {
+      const response = await fetch('https://formspree.io/f/xljgnnzd', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          naam: fname + ' ' + lname,
-          telefoon: phone,
-          email: email,
-          adres: adres,
-          dienst: dienst,
-          bericht: msg,
-          _subject: '🎨 Nieuwe offerte-aanvraag van ' + fname + ' ' + lname,
-          _replyto: email
-        })
+        body: data,
+        headers: { 'Accept': 'application/json' }
       });
 
       if (response.ok) {
-        document.getElementById('form-fields').style.display = 'none';
+        // Verberg formulier, toon bedankbericht
+        form.style.display = 'none';
         document.getElementById('success-panel').style.display = 'block';
       } else {
+        const result = await response.json();
         btn.textContent = 'Stuur offerte-aanvraag →';
         btn.disabled = false;
-        alert('Er ging iets mis. Bel ons direct op 06-38436487 of stuur een WhatsApp bericht.');
+        alert('Er ging iets mis bij het versturen. Bel ons op 06-38436487 of stuur een WhatsApp.');
       }
-    } catch(e) {
+    } catch(err) {
       btn.textContent = 'Stuur offerte-aanvraag →';
       btn.disabled = false;
-      alert('Er ging iets mis. Bel ons direct op 06-38436487 of stuur een WhatsApp bericht.');
+      alert('Er ging iets mis bij het versturen. Bel ons op 06-38436487 of stuur een WhatsApp.');
     }
-  }
+  });
 
-  // Lightbox
+  // ── Lightbox ──
   function openLb(src) {
     document.getElementById('lb-img').src = src;
     document.getElementById('lightbox').classList.add('open');
