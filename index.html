@@ -804,28 +804,89 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 960px) {
-    nav { padding: 0 20px; }
+
+    /* NAV: logo links, alleen bel-knop rechts — geen telefoontext */
+    nav {
+      padding: 0 16px;
+      height: 60px;
+    }
     .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .nav-phone { display: none; }
+    .nav-cta {
+      font-size: 0.8rem;
+      padding: 9px 16px;
+      white-space: nowrap;
+    }
+    .nav-logo img { height: 36px; }
+
+    /* HERO */
+    .hero { grid-template-columns: 1fr; min-height: auto; margin-top: 60px; }
     .hero-right { display: none; }
-    .hero-left { padding: 48px 24px 56px; }
-    .hero-form { max-width: 100%; }
-    .form-grid { grid-template-columns: 1fr; }
-    .section { padding: 60px 24px; }
-    .trust-bar { padding: 14px 20px; gap: 18px; }
-    .diensten-grid { grid-template-columns: 1fr; }
-    .over-inner { grid-template-columns: 1fr; }
-    .over-img-grid img:first-child { height: 220px; }
-    .werkgebied-inner { grid-template-columns: 1fr; }
-    .stappen { grid-template-columns: 1fr 1fr; }
+    .hero-left { padding: 32px 20px 40px; }
+    .hero-badge-top { font-size: 0.72rem; padding: 5px 12px 5px 8px; margin-bottom: 16px; }
+    h1 { font-size: 2rem; margin-bottom: 12px; }
+    .hero-sub { font-size: 0.9rem; margin-bottom: 20px; }
+    .hero-social-proof { gap: 8px; margin-bottom: 20px; }
+    .proof-badge { font-size: 0.75rem; padding: 6px 10px; }
+    .hero-form { padding: 20px 16px; border-radius: 10px; }
+    .hero-form-title { font-size: 0.85rem; margin-bottom: 12px; }
+    .form-grid { grid-template-columns: 1fr; gap: 8px; margin-bottom: 8px; }
+
+    /* TRUST BAR: compact, 2 kolommen op mobiel */
+    .trust-bar {
+      padding: 10px 16px;
+      gap: 6px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      justify-items: start;
+    }
+    .trust-item { font-size: 0.78rem; gap: 6px; }
+
+    /* SECTIES */
+    .section { padding: 48px 20px; }
+    h2 { font-size: 1.6rem; }
+    .section-lead { font-size: 0.9rem; margin-bottom: 32px; }
+
+    /* DIENSTEN */
+    .diensten-grid { grid-template-columns: 1fr; gap: 14px; }
+    .dienst-card { padding: 24px 20px; }
+
+    /* OVER ONS */
+    .over-inner { grid-template-columns: 1fr; gap: 32px; }
+    .over-img-grid img:first-child { height: 200px; }
+    .over-img-grid img { height: 140px; }
+
+    /* WERKGEBIED */
+    .werkgebied-inner { grid-template-columns: 1fr; gap: 32px; }
+    .steden-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .stad-item { font-size: 0.8rem; padding: 9px 10px; }
+
+    /* WERKWIJZE */
+    .stappen { grid-template-columns: 1fr 1fr; gap: 20px; }
     .stappen::before { display: none; }
-    .portfolio-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 150px; }
+    .stap-num { width: 40px; height: 40px; font-size: 1rem; }
+
+    /* PORTFOLIO */
+    .portfolio-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 130px; gap: 6px; }
     .portfolio-grid .big { grid-column: span 1; grid-row: span 1; }
-    .reviews-grid { grid-template-columns: 1fr; }
-    .cta-blok { grid-template-columns: 1fr; padding: 56px 24px; }
-    .cta-buttons { flex-direction: row; flex-wrap: wrap; }
-    .footer-top { grid-template-columns: 1fr; gap: 32px; }
-    footer { padding: 48px 24px 28px; }
+
+    /* REVIEWS */
+    .reviews-grid { grid-template-columns: 1fr; gap: 14px; }
+    .reviews-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .review-card { padding: 20px 18px; }
+
+    /* CTA */
+    .cta-blok { grid-template-columns: 1fr; padding: 48px 20px; gap: 24px; }
+    .cta-buttons { flex-direction: column; }
+    .btn-white, .btn-outline-white { padding: 13px 20px; text-align: center; }
+
+    /* FOOTER */
+    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    footer { padding: 40px 20px 24px; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+    /* FLOATING WHATSAPP */
+    .floating-call { bottom: 20px; right: 16px; font-size: 0.82rem; padding: 11px 18px; }
   }
 </style>
 </head>
